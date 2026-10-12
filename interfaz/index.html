@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Discapacidad y economía</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <header class="encabezado">
+        <div>
+            <h1>Discapacidad y economía</h1>
+            <p class="subtitulo">Base de certificados de discapacidad · <span id="total-personas"></span> personas</p>
+        </div>
+        <label class="filtro">
+            <span>Ver</span>
+            <select id="selector-ambito"></select>
+        </label>
+    </header>
+
+    <nav class="pestanas" role="tablist">
+        <button role="tab" data-pestana="discapacidad"><i class="punto disc"></i>Discapacidad</button>
+        <button role="tab" data-pestana="economia"><i class="punto econ"></i>Economía</button>
+        <button role="tab" data-pestana="relacion"><i class="punto disc"></i><i class="punto econ"></i>Relación entre las dos</button>
+    </nav>
+
+    <p class="leyenda" id="leyenda-nacional"><i class="raya-muestra"></i>La raya marca el valor nacional, para comparar</p>
+
+    <!-- Ambito de discapacidad -->
+    <main id="discapacidad" class="pestana">
+        <section class="planteamiento disc">
+            <h2>¿Cómo es la discapacidad de las personas de la base?</h2>
+            <p>Todas las personas de esta base tienen un certificado de discapacidad. Por eso aquí no se puede medir cuánta gente tiene una discapacidad. Lo que sí se puede ver es qué tan intensa es, de dónde viene y qué apoyo necesita cada persona.</p>
+            <p class="columnas">Se mide con: <code>calificacion</code> <code>necesita_apoyod</code> <code>cond_salud_codigo_cie11</code> <code>cond_salud_origend</code> <code>edad_anios</code></p>
+        </section>
+
+        <section class="cifras" id="cifras-discapacidad"></section>
+
+        <section class="tarjetas">
+            <article class="tarjeta">
+                <h3>Calificación del certificado</h3>
+                <p>Es el número que resume la discapacidad de la persona; entre más alto, mayor discapacidad. En la base va de 25 a 97. Cada barra es el porcentaje de personas en ese rango.</p>
+                <div id="disc-nivel"></div>
+            </article>
+            <article class="tarjeta">
+                <h3>Apoyo que necesita</h3>
+                <p>Del apoyo más ligero al más fuerte. Porcentaje de personas en cada uno.</p>
+                <div id="disc-apoyo"></div>
+            </article>
+            <article class="tarjeta">
+                <h3>Tipo de condición de salud</h3>
+                <p>Grupo al que pertenece la condición principal según la clasificación CIE-11, con ejemplos frecuentes en la base.</p>
+                <div id="disc-condicion"></div>
+            </article>
+            <article class="tarjeta">
+                <h3>Origen de la condición</h3>
+                <p>Por qué se presentó la condición de salud.</p>
+                <div id="disc-origen"></div>
+                <h3 class="segundo">Edad</h3>
+                <p>Porcentaje de personas en cada grupo de edad.</p>
+                <div id="disc-edad"></div>
+            </article>
+        </section>
+    </main>
+
+    <!-- Ambito de economia -->
+    <main id="economia" class="pestana">
+        <section class="planteamiento econ">
+            <h2>¿En qué condiciones económicas viven?</h2>
+            <p>La base no trae el ingreso de las personas. La economía se aproxima con lo que sí trae: afiliación a salud, escolaridad, trabajo, vivienda y aparatos de apoyo. Cuando una de esas cosas falta, se cuenta como una <b>carencia</b>. Solo se toman personas de 18 a 64 años, porque a un niño no le aplica trabajar ni haber terminado la primaria.</p>
+            <p class="columnas">Se mide con: <code>afiliacion_servicios_saludd</code> <code>escolaridadd</code> <code>condicion_actividad_economicad</code> <code>tipo_viviendad</code> <code>utiliza_…d</code> <code>necesitaria_…d</code> <code>dependiente_economicod</code> <code>recibe_apoyo_sociald</code></p>
+        </section>
+
+        <section class="cifras" id="cifras-economia"></section>
+
+        <section class="tarjetas">
+            <article class="tarjeta">
+                <h3>Las 5 carencias</h3>
+                <p>Porcentaje de adultos que tiene cada carencia. Una misma persona puede tener varias.</p>
+                <div id="econ-carencias"></div>
+                <ul class="notas">
+                    <li><b>Sin trabajo:</b> no trabaja por barreras de su entorno, o está buscando trabajo.</li>
+                    <li><b>Vivienda precaria:</b> vecindad, cuarto de azotea, albergue o un local que no es vivienda.</li>
+                    <li><b>Le falta un aparato:</b> necesitaría una silla de ruedas, bastón, audífono, lentes u otro que hoy no utiliza.</li>
+                </ul>
+            </article>
+            <article class="tarjeta">
+                <h3>A qué se dedica</h3>
+                <p>Condición de actividad económica de cada adulto.</p>
+                <div id="econ-actividad"></div>
+            </article>
+            <article class="tarjeta">
+                <h3>Afiliación a servicios de salud</h3>
+                <p>Institución a la que está afiliada la persona.</p>
+                <div id="econ-salud"></div>
+            </article>
+            <article class="tarjeta">
+                <h3>Escolaridad</h3>
+                <p>Último nivel que la persona sí terminó.</p>
+                <div id="econ-escolaridad"></div>
+            </article>
+        </section>
+    </main>
+
+    <!-- Relacion entre los dos ambitos -->
+    <main id="relacion" class="pestana">
+        <section class="planteamiento">
+            <h2>¿Quien tiene más carencias tiene mayor discapacidad?</h2>
+            <p>Aquí se cruzan los dos ámbitos. De un lado está el número de carencias de cada persona, de 0 a 5 (economía). Del otro, su calificación y el apoyo que necesita (discapacidad). Solo personas de 18 a 64 años.</p>
+        </section>
+
+        <section class="tarjetas">
+            <article class="tarjeta">
+                <h3>Calificación promedio según el número de carencias</h3>
+                <p>Cada barra es un grupo de personas con ese número de carencias. Si las barras crecen hacia abajo, a más carencias hay mayor discapacidad.</p>
+                <div id="rel-calificacion"></div>
+                <p class="pie">Las barras tenues son grupos de menos de 30 personas; su promedio no es confiable.</p>
+            </article>
+            <article class="tarjeta">
+                <h3>Carencias promedio según el apoyo que necesita</h3>
+                <p>La misma relación vista al revés: cuántas carencias tiene en promedio cada grupo de apoyo.</p>
+                <div id="rel-apoyo"></div>
+            </article>
+            <article class="tarjeta ancha">
+                <h3>Qué carencias crecen con la discapacidad</h3>
+                <p>Cada celda es el porcentaje de adultos con esa carencia dentro de cada rango de calificación. Si el color se oscurece hacia la derecha, esa carencia crece con la discapacidad.</p>
+                <div id="rel-matriz" class="desplazable"></div>
+            </article>
+            <article class="tarjeta">
+                <h3>Carencias promedio por estado</h3>
+                <p>Solo los estados con al menos 200 adultos en la base. Da clic en un estado para verlo.</p>
+                <div id="rel-estados"></div>
+            </article>
+            <article class="tarjeta">
+                <h3>Qué no se puede concluir</h3>
+                <ul class="notas grandes">
+                    <li><b>No es la pobreza oficial.</b> Las carencias son una aproximación con las columnas que hay; la base no trae ingreso.</li>
+                    <li><b>No dice qué causa qué.</b> Se ve que van juntas, no si la pobreza agrava la discapacidad o al revés.</li>
+                    <li><b>Todos tienen certificado.</b> No se puede comparar contra personas sin discapacidad.</li>
+                    <li><b>Los estados no son muestras parejas.</b> Hay estados con miles de personas y otros con unos cientos.</li>
+                    <li><b>«Sin trabajo» ya menciona barreras.</b> Esa respuesta se traslapa en parte con la propia discapacidad.</li>
+                </ul>
+            </article>
+        </section>
+    </main>
+
+    <div id="globo" class="globo" hidden></div>
+
+    <script src="datos.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
